@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Will You Be My Valentine? 💕</title>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -34,8 +34,6 @@
             background-repeat: no-repeat;
             filter: brightness(0.4);
             z-index: -1;
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
         }
 
         .container {
@@ -105,6 +103,20 @@
             z-index: 1000;
         }
 
+        .hidden {
+            display: none;
+        }
+
+        /* Result Page Styles */
+        #resultSection {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
         .result-container {
             display: flex;
             flex-direction: column;
@@ -113,18 +125,6 @@
             animation: fadeIn 0.8s ease-in;
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
-            gap: 0;
-        }
-
-        .result-image {
-            max-width: 500px;
-            max-height: 60vh;
-            width: 100%;
-            height: auto;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            object-fit: contain;
         }
 
         .combined-quote {
@@ -143,18 +143,15 @@
             max-width: 600px;
         }
 
-        .love-quote-left {
-            display: none;
-        }
-
-        .love-quote-right {
-            display: none;
-        }
-
-        .image-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .result-image {
+            max-width: 500px;
+            max-height: 60vh;
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            object-fit: contain;
+            margin-bottom: 30px;
         }
 
         .surprise-link {
@@ -168,25 +165,11 @@
             font-weight: bold;
             box-shadow: 0 4px 15px rgba(255, 23, 68, 0.4);
             transition: transform 0.2s, box-shadow 0.2s;
-            margin-top: 30px;
         }
 
         .surprise-link:hover {
             transform: scale(1.05);
             box-shadow: 0 6px 20px rgba(255, 23, 68, 0.6);
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        #resultSection {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 10px;
         }
 
         @media (max-width: 768px) {
@@ -203,12 +186,21 @@
             .result-image {
                 max-width: 90%;
             }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .container {
+                padding: 40px 30px;
+            }
         }
     </style>
 </head>
 <body>
     <div id="background"></div>
 
+    <!-- FIRST PAGE: Question -->
     <div id="questionSection" class="container">
         <h1>Will You Be My Valentine Forever? 💝</h1>
         <div class="buttons">
@@ -217,15 +209,14 @@
         </div>
     </div>
 
+    <!-- SECOND PAGE: Result -->
     <div id="resultSection" class="hidden">
         <div class="result-container">
             <div class="combined-quote">
                 In all the world, there is no heart for me like yours 💕<br>
                 In all the world, there will be no love for you like mine 💝
             </div>
-            <div class="image-wrapper">
-                <img id="resultImage" class="result-image" src="yes-image.png" alt="Love">
-            </div>
+            <img id="resultImage" class="result-image" src="yes-image.png" alt="Love">
         </div>
         <a href="https://drive.google.com/drive/mobile/folders/1CduXLwSsKyDda9qBOB4QL9NNlgI7ffYW" id="surpriseLink" class="surprise-link" target="_blank">Click here for a surprise 🎁</a>
     </div>
@@ -233,6 +224,8 @@
     <script>
         const noBtn = document.getElementById('noBtn');
         const yesBtn = document.getElementById('yesBtn');
+        const questionSection = document.getElementById('questionSection');
+        const resultSection = document.getElementById('resultSection');
         
         // Initialize No button at random position immediately
         let noBtnX = Math.random() * (window.innerWidth - 150) + 50;
@@ -246,7 +239,7 @@
 
         // Continuous random wandering of No button
         function moveNoButton() {
-            if (document.getElementById('questionSection').classList.contains('hidden')) return;
+            if (questionSection.classList.contains('hidden')) return;
 
             const btnRect = noBtn.getBoundingClientRect();
             const btnWidth = btnRect.width;
@@ -294,7 +287,7 @@
 
         // Also escape from cursor
         document.addEventListener('mousemove', function(e) {
-            if (document.getElementById('questionSection').classList.contains('hidden')) return;
+            if (questionSection.classList.contains('hidden')) return;
             
             const btnRect = noBtn.getBoundingClientRect();
             const btnCenterX = btnRect.left + btnRect.width / 2;
@@ -314,10 +307,10 @@
             }
         });
 
-        // Yes button click
+        // Yes button click - SWITCH TO SECOND PAGE
         yesBtn.addEventListener('click', function() {
-            document.getElementById('questionSection').classList.add('hidden');
-            document.getElementById('resultSection').classList.remove('hidden');
+            questionSection.classList.add('hidden');
+            resultSection.classList.remove('hidden');
         });
 
         // No button click (just in case someone manages to click it)
