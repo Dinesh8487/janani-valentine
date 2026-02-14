@@ -31,8 +31,11 @@
             background-image: url('background.jpg');
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
             filter: brightness(0.4);
             z-index: -1;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
         }
 
         .container {
@@ -103,36 +106,62 @@
         }
 
         .result-container {
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
             animation: fadeIn 0.8s ease-in;
-            max-width: 90%;
+            max-width: 95%;
             margin: 0 auto;
+            padding: 20px;
+            flex-wrap: wrap;
         }
 
         .result-image {
-            max-width: 600px;
-            width: 100%;
-            max-height: 70vh;
+            max-width: 400px;
+            max-height: 500px;
+            width: auto;
+            height: auto;
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            display: block;
-            margin: 0 auto;
+            object-fit: contain;
+            flex-shrink: 0;
         }
 
-        .love-quote {
+        .love-quote-left {
             font-family: 'Great Vibes', 'Dancing Script', cursive;
-            font-size: 2em;
+            font-size: 1.8em;
             color: #ff1744;
             font-style: italic;
-            padding: 30px 20px;
+            padding: 20px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
             background: rgba(255, 255, 255, 0.9);
             border-radius: 20px;
-            max-width: 700px;
-            margin: 0 auto 30px auto;
-            line-height: 1.8;
+            max-width: 250px;
+            line-height: 1.6;
             text-align: center;
             box-shadow: 0 5px 20px rgba(255, 23, 68, 0.2);
+            order: 1;
+        }
+
+        .love-quote-right {
+            font-family: 'Great Vibes', 'Dancing Script', cursive;
+            font-size: 1.8em;
+            color: #ff1744;
+            font-style: italic;
+            padding: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            max-width: 250px;
+            line-height: 1.6;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(255, 23, 68, 0.2);
+            order: 3;
+        }
+
+        .image-wrapper {
+            order: 2;
         }
 
         .surprise-link {
@@ -160,6 +189,25 @@
 
         #resultSection {
             text-align: center;
+            max-height: 100vh;
+            overflow-y: auto;
+            padding: 20px 10px;
+        }
+
+        @media (max-width: 900px) {
+            .result-container {
+                flex-direction: column;
+            }
+            
+            .love-quote-left,
+            .love-quote-right {
+                max-width: 80%;
+                order: unset;
+            }
+            
+            .image-wrapper {
+                order: unset;
+            }
         }
     </style>
 </head>
@@ -175,12 +223,16 @@
     </div>
 
     <div id="resultSection" class="hidden">
-        <div class="love-quote" id="quoteText">
-            In all the world, there is no heart for me like yours 💕<br>
-            In all the world, there will be no love for you like mine 💝
-        </div>
         <div class="result-container">
-            <img id="resultImage" class="result-image" src="yes-image.png" alt="Love">
+            <div class="love-quote-left">
+                In all the world, there is no heart for me like yours 💕
+            </div>
+            <div class="image-wrapper">
+                <img id="resultImage" class="result-image" src="yes-image.png" alt="Love">
+            </div>
+            <div class="love-quote-right">
+                In all the world, there will be no love for you like mine 💝
+            </div>
         </div>
         <a href="https://drive.google.com/drive/mobile/folders/1CduXLwSsKyDda9qBOB4QL9NNlgI7ffYW" id="surpriseLink" class="surprise-link" target="_blank">Click here for a surprise 🎁</a>
     </div>
@@ -189,10 +241,15 @@
         const noBtn = document.getElementById('noBtn');
         const yesBtn = document.getElementById('yesBtn');
         
-        let noBtnX = window.innerWidth / 2 + 100;
-        let noBtnY = window.innerHeight / 2;
-        let velocityX = 2;
-        let velocityY = 2;
+        // Initialize No button at random position immediately
+        let noBtnX = Math.random() * (window.innerWidth - 150) + 50;
+        let noBtnY = Math.random() * (window.innerHeight - 100) + 50;
+        let velocityX = (Math.random() - 0.5) * 4;
+        let velocityY = (Math.random() - 0.5) * 4;
+
+        // Set initial position immediately
+        noBtn.style.left = noBtnX + 'px';
+        noBtn.style.top = noBtnY + 'px';
 
         // Continuous random wandering of No button
         function moveNoButton() {
@@ -239,8 +296,8 @@
             requestAnimationFrame(moveNoButton);
         }
 
-        // Start wandering animation
-        moveNoButton();
+        // Start wandering animation immediately
+        requestAnimationFrame(moveNoButton);
 
         // Also escape from cursor
         document.addEventListener('mousemove', function(e) {
