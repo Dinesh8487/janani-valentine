@@ -107,63 +107,53 @@
 
         .result-container {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 30px;
             animation: fadeIn 0.8s ease-in;
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            height: calc(100vh - 150px);
+            gap: 0;
         }
 
         .result-image {
-            max-width: 350px;
-            max-height: calc(100vh - 200px);
-            width: auto;
+            max-width: 500px;
+            max-height: 60vh;
+            width: 100%;
             height: auto;
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
             object-fit: contain;
         }
 
-        .love-quote-left {
+        .combined-quote {
             font-family: 'Dancing Script', cursive;
-            font-size: 1.5em;
+            font-size: 1.6em;
             color: #ff1744;
             font-weight: 700;
-            padding: 20px;
+            padding: 25px 30px;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
             background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
-            max-width: 280px;
-            min-width: 200px;
-            line-height: 1.5;
+            line-height: 1.7;
             text-align: center;
             box-shadow: 0 5px 20px rgba(255, 23, 68, 0.2);
-            align-self: center;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        .love-quote-left {
+            display: none;
         }
 
         .love-quote-right {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.5em;
-            color: #ff1744;
-            font-weight: 700;
-            padding: 20px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            max-width: 280px;
-            min-width: 200px;
-            line-height: 1.5;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(255, 23, 68, 0.2);
-            align-self: center;
+            display: none;
         }
 
         .image-wrapper {
-            flex-shrink: 0;
             display: flex;
+            flex-direction: column;
             align-items: center;
         }
 
@@ -199,20 +189,19 @@
             padding: 10px;
         }
 
-        @media (max-width: 1000px) {
+        @media (max-width: 768px) {
             .result-container {
-                flex-direction: column;
-                gap: 20px;
-                height: auto;
+                padding: 10px;
             }
             
-            .love-quote-left,
-            .love-quote-right {
+            .combined-quote {
+                font-size: 1.3em;
+                padding: 20px;
                 max-width: 90%;
             }
             
             .result-image {
-                max-width: 300px;
+                max-width: 90%;
             }
         }
     </style>
@@ -230,14 +219,12 @@
 
     <div id="resultSection" class="hidden">
         <div class="result-container">
-            <div class="love-quote-left">
-                In all the world, there is no heart for me like yours 💕
+            <div class="combined-quote">
+                In all the world, there is no heart for me like yours 💕<br>
+                In all the world, there will be no love for you like mine 💝
             </div>
             <div class="image-wrapper">
                 <img id="resultImage" class="result-image" src="yes-image.png" alt="Love">
-            </div>
-            <div class="love-quote-right">
-                In all the world, there will be no love for you like mine 💝
             </div>
         </div>
         <a href="https://drive.google.com/drive/mobile/folders/1CduXLwSsKyDda9qBOB4QL9NNlgI7ffYW" id="surpriseLink" class="surprise-link" target="_blank">Click here for a surprise 🎁</a>
